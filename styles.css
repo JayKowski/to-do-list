@@ -10,6 +10,12 @@ body{
     /* height: 100%; */
 }
 
+.nav-pane {
+    position: fixed;
+    width: 95%;
+    border-radius: 5px;
+}
+
 .nav-pane .navigation{
     list-style-type: none;
     background-color: #22223B;
@@ -38,11 +44,16 @@ body{
 }
 
 .projects .task-list .delete-task{
-    /* padding: 3px; */
     border: 1px solid #000;
     border-radius: 3px;
     margin-top: 5px;
     background-color: #FFA07A;
+    height: 35px;
+    width: 35px;
+}
+
+.projects .task-list .delete-task .fa-trash-alt {
+    font-size: 20px;
 }
 
 .to-do{
@@ -56,6 +67,12 @@ body{
     margin: 3px 0 5px 0;
 }
 
+.new-task .task-input {
+    padding: 5px;
+    width: 95%;
+    margin-top: 5px;
+}
+
 .to-do h2{
     margin: 3px 0 5px 0;
 }
@@ -64,16 +81,26 @@ body{
     margin-top: 5px;
 }
 
-.to-do .task-list .task{
+.to-do .task-list{
     background-color: #D0B8B3;
     margin-top: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    padding: 4px;
+    padding: 10px;
+    margin: 10px 0;
+    display: flex;
+}
+
+.to-do .task-list .task-text {
+    flex-basis: 80%;
+}
+
+.task-list .task-desc {
+    margin: 0;
 }
 
 .to-do .task-list .due-date{
-    padding: 0 5px;
+    margin: 3px 0;
 }
 
 .to-do .new-task .add-task{

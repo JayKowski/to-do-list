@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+    <script src="https://kit.fontawesome.com/0dfc1e290d.js" crossorigin="anonymous"></script>
     <title>Document</title>
 </head>
 <body>
@@ -27,39 +28,46 @@
                 <form class="new-task">
                     <h3>New Task</h3>
                     <label for="task-name">task name: </label><br>
-                    <input type="text" name="task-name"><br>
+                    <input class="task-input" type="text" name="task-name"><br>
                     <label for="task-name">date-due: </label><br>
-                    <input type="text" name="task-date"><br>
+                    <input class="task-input" type="text" name="task-date"><br>
                     <input class="add-task" type="submit" value="+ Add Task">
                 </form>
-                <ul class="task-list">
-                    <li class="task"><span>Finish Math Assignment</span><span class="due-date">23/22/21</span><br><button class="delete-task">Delete</button></li>
-                    <li class="task">Do science assignment<span class="due-date">23/22/21</span><br><button class="delete-task">Delete</button></li>
-                    <li class="task">Finish science congress project<span class="due-date">23/22/21</span><br><button class="delete-task">Delete</button></li>
-                </ul>
-                <button class="dlt-prjct">Delete</button>
+                <div class="task-list">
+                    <span class="task-text"><p class="task-desc">Finish Math Assignment</p><p class="due-date">23/22/21</p></span><button class="delete-task"><i class="fas fa-trash-alt"></i></button>
+                </div>
+                <div class="task-list">
+                    <span class="task-text"><p class="task-desc">Do science assignmentt</p><p class="due-date">23/22/21</p></span><button class="delete-task"><i class="fas fa-trash-alt"></i></button>
+                </div>
+                <div class="task-list">
+                    <span class="task-text"><p class="task-desc">Finish science congred</p><p class="due-date">23/22/21</p></span><button class="delete-task"><i class="fas fa-trash-alt"></i></button>
+                </div>
+                    <button class="dlt-prjct">Delete Project</button>
             </div>
+
             <div class="to-do">
                 <h2 class="to-do-title">Homework</h2>
-                <p class="to-do-description">This is a to do list that will help me ensure that all my homework is done without any
-                    being left
+                <p class="to-do-description">This is a to do list that will help me ensure that all my homework is done without any being left
                     out</p>
                 <form class="new-task">
                     <h3>New Task</h3>
                     <label for="task-name">task name: </label><br>
-                    <input type="text" name="task-name"><br>
+                    <input class="task-input" type="text" name="task-name"><br>
                     <label for="task-name">date-due: </label><br>
-                    <input type="text" name="task-date"><br>
+                    <input class="task-input" type="text" name="task-date"><br>
                     <input class="add-task" type="submit" value="+ Add Task">
                 </form>
-                <ul class="task-list">
-                    <li class="task"><span>Finish Math Assignment</span><span class="due-date">23/22/21</span><br><button class="delete-task">Delete</button></li>
-                    <li class="task">Do science assignment<span class="due-date">23/22/21</span><br><button class="delete-task">Delete</button></li>
-                    <li class="task">Finish science congress project<span class="due-date">23/22/21</span><br><button class="delete-task">Delete</button></li>
-                </ul>
-                <button class="dlt-prjct">Delete</button>
+                <div class="task-list">
+                    <span class="task-text"><p class="task-desc">Finish Math Assignment</p><p class="due-date">23/22/21</p></span><button class="delete-task"><i class="fas fa-trash-alt"></i></button>
+                </div>
+                <div class="task-list">
+                    <span class="task-text"><p class="task-desc">Do science assignmentt</p><p class="due-date">23/22/21</p></span><button class="delete-task"><i class="fas fa-trash-alt"></i></button>
+                </div>
+                <div class="task-list">
+                    <span class="task-text"><p class="task-desc">Finish science congred</p><p class="due-date">23/22/21</p></span><button class="delete-task"><i class="fas fa-trash-alt"></i></button>
+                </div>
+                    <button class="dlt-prjct">Delete Project</button>
             </div>
-        </div>
 
     </div>
 </body>
