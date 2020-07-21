@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="wrapper">
+        <nav class="nav-pane">
+            <ul class="navigation">
+                <li class="link">Projects</li>
+                <li class="link">Due today</li>
+                <li class="link">Priority</li>
+                <!-- <li class="link"></li> -->
+            </ul>
+        </nav>
+        <div class="new-item">
+            <button class="add-item">+ New Project</button>
+        </div>
+        <div class="projects">
+            <div class="to-do">
+                <h2 class="to-do-title">Homework</h2>
+                <p class="to-do-description">This is a to do list that will help me ensure that all my homework is done without any being left
+                    out</p>
+                <form class="new-task">
+                    <h3>New Task</h3>
+                    <label for="task-name">task name: </label><br>
+                    <input type="text" name="task-name"><br>
+                    <label for="task-name">date-due: </label><br>
+                    <input type="text" name="task-date"><br>
+                    <input class="add-task" type="submit" value="+ Add Task">
+                </form>
+                <ul class="task-list">
+                    <li class="task"><span>Finish Math Assignment</span><span class="due-date">23/22/21</span><br><button class="delete-task">Delete</button></li>
+                    <li class="task">Do science assignment<span class="due-date">23/22/21</span><br><button class="delete-task">Delete</button></li>
+                    <li class="task">Finish science congress project<span class="due-date">23/22/21</span><br><button class="delete-task">Delete</button></li>
+                </ul>
+                <button class="dlt-prjct">Delete</button>
+            </div>
+            <div class="to-do">
+                <h2 class="to-do-title">Homework</h2>
+                <p class="to-do-description">This is a to do list that will help me ensure that all my homework is done without any
+                    being left
+                    out</p>
+                <form class="new-task">
+                    <h3>New Task</h3>
+                    <label for="task-name">task name: </label><br>
+                    <input type="text" name="task-name"><br>
+                    <label for="task-name">date-due: </label><br>
+                    <input type="text" name="task-date"><br>
+                    <input class="add-task" type="submit" value="+ Add Task">
+                </form>
+                <ul class="task-list">
+                    <li class="task"><span>Finish Math Assignment</span><span class="due-date">23/22/21</span><br><button class="delete-task">Delete</button></li>
+                    <li class="task">Do science assignment<span class="due-date">23/22/21</span><br><button class="delete-task">Delete</button></li>
+                    <li class="task">Finish science congress project<span class="due-date">23/22/21</span><br><button class="delete-task">Delete</button></li>
+                </ul>
+                <button class="dlt-prjct">Delete</button>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
