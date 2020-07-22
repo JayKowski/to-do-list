@@ -9,17 +9,12 @@
 </head>
 <body>
     <div class="wrapper">
-        <nav class="nav-pane">
-            <ul class="navigation">
-                <li class="link">Projects</li>
-                <li class="link">Due today</li>
-                <li class="link">Priority</li>
-                <!-- <li class="link"></li> -->
-            </ul>
-        </nav>
-        <div class="new-item">
-            <button class="add-item">+ New Project</button>
-        </div>
+        <ul class="navigation">
+            <li class="link">Projects</li>
+            <li class="link">Due today</li>
+            <li class="link">Priority</li>
+        </ul>
+        <button class="add-item">+ New Project</button>
         <div class="projects">
             <div class="to-do">
                 <h2 class="to-do-title">Homework</h2>
@@ -30,7 +25,7 @@
                     <label for="task-name">task name: </label><br>
                     <input class="task-input" type="text" name="task-name"><br>
                     <label for="task-name">date-due: </label><br>
-                    <input class="task-input" type="text" name="task-date"><br>
+                    <input class="task-input" type="date" name="task-date"><br>
                     <input class="add-task" type="submit" value="+ Add Task">
                 </form>
                 <div class="task-list">
@@ -54,7 +49,7 @@
                     <label for="task-name">task name: </label><br>
                     <input class="task-input" type="text" name="task-name"><br>
                     <label for="task-name">date-due: </label><br>
-                    <input class="task-input" type="text" name="task-date"><br>
+                    <input class="task-input" type="date" name="task-date"><br>
                     <input class="add-task" type="submit" value="+ Add Task">
                 </form>
                 <div class="task-list">
