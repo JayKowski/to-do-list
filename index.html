@@ -18,6 +18,16 @@
             <li class="link">Priority</li>
         </ul>
         <button class="add-item">+ New Project</button>
+        <div class="new-project">
+            <form class="add-project">
+                <h3>New Project</h3>
+                <label for="project-name">Project Name: </label><br>
+                <input class="project-input" type="text" name="project-name" required><br>
+                <label for="project-desc">Description: </label><br>
+                <input class="project-input" type="text-area" name="project-desc" required><br>
+                <input class="submit-project"type="submit" value="+ Add Project">
+            </form>
+        </div>
         <div class="projects">
             <div class="to-do">
                 <h2 class="to-do-title">Homework</h2>
@@ -25,16 +35,19 @@
                     out</p>
                 <form class="new-task">
                     <h3>New Task</h3>
-                    <label for="task-name">task name: </label><br>
+
+                    <label for="task-name">Task Name: </label><br>
                     <input class="task-input" type="text" name="task-name"><br>
-                    <label for="task-name">date-due: </label><br>
+
+                    <label for="task-date">Due-Date: </label><br>
                     <input class="task-input" type="date" name="task-date"><br>
-                    <label for="priority">priority: </label><br>
+
+                    <label for="priority">Priority: </label><br>
                     <select class="task-input-dd" name="priority">
                         <option value="high">high</option>
                         <option value="medium">medium</option>
                         <option value="low">low</option>
-                      </select><br>
+                    </select><br>
                     <input class="add-task" type="submit" value="+ Add Task">
                 </form>
                 <div class="task-list">
@@ -92,20 +105,21 @@
             </div>
             <div class="to-do">
                 <h2 class="to-do-title">Homework</h2>
-                <p class="to-do-description">This is a to do list that will help me ensure that all my homework is done without any being left
+                <p class="to-do-description">This is a to do list that will help me ensure that all my homework is done without any
+                    being left
                     out</p>
                 <form class="new-task">
                     <h3>New Task</h3>
-                    <label for="task-name">task name: </label><br>
+                    <label for="task-name">Task Name: </label><br>
                     <input class="task-input" type="text" name="task-name"><br>
-                    <label for="task-name">date-due: </label><br>
+                    <label for="task-name">Due-Date: </label><br>
                     <input class="task-input" type="date" name="task-date"><br>
-                    <label for="priority">priority: </label><br>
+                    <label for="priority">Priority: </label><br>
                     <select class="task-input-dd" name="priority">
                         <option value="high">high</option>
                         <option value="medium">medium</option>
                         <option value="low">low</option>
-                      </select><br>
+                    </select><br>
                     <input class="add-task" type="submit" value="+ Add Task">
                 </form>
                 <div class="task-list">
@@ -159,9 +173,10 @@
                     </span>
                     <button class="delete-task"><i class="fas fa-trash-alt"></i></button>
                 </div>
-                    <button class="dlt-prjct">Delete Project</button>
+                <button class="dlt-prjct">Delete Project</button>
             </div>
 
     </div>
+    <script src="index.js"></script>
 </body>
 </html>
