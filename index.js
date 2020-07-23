@@ -18,9 +18,6 @@
 function createNewProjectForm(attatchTo){
     const createForm = document.createElement('form')
     createForm.className += 'new-task';
-    const returnForm = () => {
-        return createForm;
-    };
     const h3 = document.createElement('h3')
     h3.innerText = 'New Task'
 
@@ -85,8 +82,6 @@ function createNewProjectForm(attatchTo){
     createForm.appendChild(select);
     createForm.appendChild(submitBtn);
     attatchTo.appendChild(createForm);
-
-    returnForm
 }
 
 const projectForm = document.querySelector('.add-project')
@@ -115,14 +110,14 @@ projectForm.addEventListener('submit', function(e){
     newProject.appendChild(deleteProject);
 });
 
-const taskForm = document.querySelector('.new-task')
-taskForm.addEventListener('submit', function(e){
-    e.preventDefault();
+const rootElement = document.querySelector('body')
+rootElement.addEventListener('submit', function(e){
+    
+    if (e.target.className === '.add-task'){
+        console.log('works');
     const taskName = taskForm.querySelector('input[name="task-name"]').value
     const taskDate = taskForm.querySelector('input[name="task-date"]').value
     const taskPriority = taskForm.querySelector('select[name="priority"]').value
-    console.log(taskPriority)
-    console.log(taskPriority);
     const addTask = document.querySelector('.to-do');
     const newTask = document.createElement('div');
     newTask.className += 'task-list'
@@ -155,8 +150,8 @@ taskForm.addEventListener('submit', function(e){
     const trashBin = document.createElement('i');
     trashBin.className += 'fas fa-trash-alt';
 
-    addTask.appendChild(returnForm());
-    returnForm().appendChild(span);
+    addTask.appendChild(newTask);
+    newTask.appendChild(span);
     span.appendChild(p1);
     span.appendChild(p2);
     span.appendChild(div1);
@@ -168,4 +163,7 @@ taskForm.addEventListener('submit', function(e){
     divTask2.appendChild(spanFooter);
     newTask.appendChild(deleteButton);
     deleteButton.appendChild(trashBin);
-})
+
+}
+
+},true)
