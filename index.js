@@ -15,7 +15,26 @@
 ///////////// const myProjects = []; /////////////////
 
 //Should be in it's own module file
-function createNewProjectForm(attatchTo){
+
+let myProjects = []
+
+function taskDetails(name, date, priority) {
+    this.taskName = name,
+        this.dueDate = date,
+        this.priority = priority
+}
+
+function project(name, description) {
+    this.name = name,
+        this.description = description,
+        this.tasks = []
+}
+
+const task1 = new taskDetails('add task', '12/13/14', 'HIGH')
+
+// console.log(task1.taskName)
+
+function createNewProjectForm(attatchTo) {
     const createForm = document.createElement('form')
     createForm.className += 'new-task';
     const returnForm = () => {
@@ -90,10 +109,18 @@ function createNewProjectForm(attatchTo){
 }
 
 const projectForm = document.querySelector('.add-project')
-projectForm.addEventListener('submit', function(e){
+projectForm.addEventListener('submit', function (e) {
     e.preventDefault();
     const projectName = projectForm.querySelector('input[name="project-name"]').value;
     const projectDesc = projectForm.querySelector('input[name="project-desc"]').value;
+
+    //Create Project Object
+    let projectNew = new project(projectName, projectDesc);
+    console.log(projectNew)
+    myProjects.push(projectNew);
+    //
+    let createdProj = myProjects[0]
+    console.log(createdProj)
 
     const addProject = document.querySelector('.projects');
     const newProject = document.createElement('div');
@@ -102,8 +129,8 @@ projectForm.addEventListener('submit', function(e){
     h2.className += 'to-do-title';
     const p = document.createElement('p');
     p.className += 'to-do-description';
-    h2.innerHTML = `${projectName}`;
-    p.innerHTML = `${projectDesc}`;
+    h2.innerHTML = `${myProjects[0].name}`;
+    p.innerHTML = `${myProjects[0].description}`;
     const deleteProject = document.createElement('button');
     deleteProject.className += 'dlt-prjct';
     deleteProject.innerHTML = 'Delete Project';
@@ -115,13 +142,21 @@ projectForm.addEventListener('submit', function(e){
     newProject.appendChild(deleteProject);
 });
 
+
 const taskForm = document.querySelector('.new-task')
-taskForm.addEventListener('submit', function(e){
+taskForm.addEventListener('submit', function (e) {
     e.preventDefault();
     const taskName = taskForm.querySelector('input[name="task-name"]').value
     const taskDate = taskForm.querySelector('input[name="task-date"]').value
     const taskPriority = taskForm.querySelector('select[name="priority"]').value
-    console.log(taskPriority)
+    const cTask = new taskDetails(taskName, taskDate, taskPriority);
+
+
+    console.log(cTask)
+    myProjects[0].tasks.push(cTask)
+    console.log(myProjects[0].tasks)
+
+
     console.log(taskPriority);
     const addTask = document.querySelector('.to-do');
     const newTask = document.createElement('div');
@@ -130,10 +165,10 @@ taskForm.addEventListener('submit', function(e){
     span.className += 'task-text';
     const p1 = document.createElement('p');
     p1.className += 'task-desc';
-    p1.innerHTML = `${taskName}`;
+    p1.innerHTML = `${myProjects[0].tasks.taskName}`;
     const p2 = document.createElement('p');
     p2.className += 'due-date';
-    p2.innerHTML = `${taskDate}`;
+    p2.innerHTML = `${myProjects[0].tasks.dueDate}`;
     const div1 = document.createElement('div');
     div1.className += 'check-form';
     const divTask1 = document.createElement('div');
@@ -149,7 +184,7 @@ taskForm.addEventListener('submit', function(e){
     check2.className += 'far fa-flag';
     const spanFooter = document.createElement('span');
     spanFooter.className += 'task-priority';
-    spanFooter.innerHTML = `${taskPriority}`;
+    spanFooter.innerHTML = `${myProjects[0].tasks.priority}`;
     const deleteButton = document.createElement('button');
     deleteButton.className += 'delete-task';
     const trashBin = document.createElement('i');
