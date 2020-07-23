@@ -1,3 +1,5 @@
+import * as Storage from './storage.js';
+
 // ## PHASE 1
 // Add event listener for new project and publish the results to the DOM -- //
 
@@ -108,38 +110,47 @@ function createNewProjectForm(attatchTo) {
     returnForm
 }
 
-const projectForm = document.querySelector('.add-project')
-projectForm.addEventListener('submit', function (e) {
-    e.preventDefault();
-    const projectName = projectForm.querySelector('input[name="project-name"]').value;
-    const projectDesc = projectForm.querySelector('input[name="project-desc"]').value;
-
-    //Create Project Object
-    let projectNew = new project(projectName, projectDesc);
-    console.log(projectNew)
-    myProjects.push(projectNew);
-    //
-    let createdProj = myProjects[0]
-    console.log(createdProj)
-
+function createProject(name, description){
     const addProject = document.querySelector('.projects');
     const newProject = document.createElement('div');
     newProject.className += 'to-do';
+    newProject.setAttribute('data-index', '1')
+
     const h2 = document.createElement('h2');
     h2.className += 'to-do-title';
     const p = document.createElement('p');
     p.className += 'to-do-description';
-    h2.innerHTML = `${myProjects[0].name}`;
-    p.innerHTML = `${myProjects[0].description}`;
+    h2.innerHTML = `${name}`;
+    p.innerHTML = `${description}`;
     const deleteProject = document.createElement('button');
     deleteProject.className += 'dlt-prjct';
     deleteProject.innerHTML = 'Delete Project';
-
     addProject.appendChild(newProject);
     newProject.appendChild(h2);
     newProject.appendChild(p);
     createNewProjectForm(newProject);
     newProject.appendChild(deleteProject);
+}
+
+// add all local storage projects to the DOM
+let allProjects = Storage.getProjects();
+allProjects.forEach(function (project) {
+    createProject(project.name, project.description);
+})
+
+const projectForm = document.querySelector('.add-project')
+    projectForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const projectName = projectForm.querySelector('input[name="project-name"]').value;
+    const projectDesc = projectForm.querySelector('input[name="project-desc"]').value;
+    //Create Project Object
+    let projectNew = new project(projectName, projectDesc);
+
+    Storage.addProject(projectNew);
+
+    // myProjects.push(projectNew);
+    createProject(myProjects[0].name, myProjects[0].description)
+
 });
 
 
@@ -151,7 +162,7 @@ taskForm.addEventListener('submit', function (e) {
     const taskPriority = taskForm.querySelector('select[name="priority"]').value
     const cTask = new taskDetails(taskName, taskDate, taskPriority);
 
-
+    Storage.addTask(cTask, )
     console.log(cTask)
     myProjects[0].tasks.push(cTask)
     console.log(myProjects[0].tasks)
