@@ -18,7 +18,9 @@
 function createNewProjectForm(attatchTo){
     const createForm = document.createElement('form')
     createForm.className += 'new-task';
-
+    const returnForm = () => {
+        return createForm;
+    };
     const h3 = document.createElement('h3')
     h3.innerText = 'New Task'
 
@@ -83,6 +85,8 @@ function createNewProjectForm(attatchTo){
     createForm.appendChild(select);
     createForm.appendChild(submitBtn);
     attatchTo.appendChild(createForm);
+
+    returnForm
 }
 
 const projectForm = document.querySelector('.add-project')
@@ -112,7 +116,7 @@ projectForm.addEventListener('submit', function(e){
 });
 
 const taskForm = document.querySelector('.new-task')
-createForm.addEventListener('submit', function(e){
+taskForm.addEventListener('submit', function(e){
     e.preventDefault();
     const taskName = taskForm.querySelector('input[name="task-name"]').value
     const taskDate = taskForm.querySelector('input[name="task-date"]').value
@@ -151,8 +155,8 @@ createForm.addEventListener('submit', function(e){
     const trashBin = document.createElement('i');
     trashBin.className += 'fas fa-trash-alt';
 
-    addTask.appendChild(newTask);
-    newTask.appendChild(span);
+    addTask.appendChild(returnForm());
+    returnForm().appendChild(span);
     span.appendChild(p1);
     span.appendChild(p2);
     span.appendChild(div1);
