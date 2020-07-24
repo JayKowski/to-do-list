@@ -12,7 +12,13 @@ export function addProject(project) {
 
 
 export function getProjects(){
-    let myProjects = JSON.parse(localStorage.getItem('myProjects'))
+    let myProjects;
+    if(JSON.parse(localStorage.getItem('myProjects')) == null){
+        console.log("Local storage empty");
+        return false
+    } else {
+        myProjects = JSON.parse(localStorage.getItem('myProjects'))
+    }
     return myProjects;
 }
 
@@ -24,10 +30,12 @@ export function updateProject(){
 
 export function addTask(task, project){
     let projects = JSON.parse(localStorage.getItem('myProjects'));
-    let index = project.getAttribute('data-index');
+    let index = parseInt(project.getAttribute('data-index'));
+    // console.log(index)
     projects[index].tasks.push(task);
-    localStorage.setItem('myProjects', JSON.stringify(projects));
-    console.log('task added successfully', task);
+    // console.log(projects[index]);
+    localStorage.setItem('myProjects', JSON.stringify(projects))
+    // console.log('task added successfully', task);
 }
 
 export function deleteProject(key){
@@ -36,4 +44,8 @@ export function deleteProject(key){
 
 export function removeTask(key){
     localStorage.removeItem(`${key}`)
+}
+
+export function clearStorage(){
+    localStorage.clear();
 }
