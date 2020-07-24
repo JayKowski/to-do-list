@@ -44,12 +44,15 @@ export function addTask(task, project){
     console.log('task added successfully', task);
 }
 
-export function deleteProject(key){
-    return localStorage.removeItem(`${key}`)
+export function deleteTask(task, project){
+    projects = JSON.parse(localStorage.getItem('myProjects'));
+    projects[parseInt(project)].tasks.splice(task, 1);
+    console.log('Your task has been deleted');
+    localStorage.setItem('myProjects', JSON.stringify(projects));
 }
 
-export function removeTask(key){
-    localStorage.removeItem(`${key}`)
+export function deleteProject(key){
+    return localStorage.removeItem(`${key}`)
 }
 
 export function clearStorage(){

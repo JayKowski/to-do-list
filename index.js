@@ -146,23 +146,20 @@ if(allProjects === undefined){
 const projectForm = document.querySelector('.add-project')
     projectForm.addEventListener('submit', function (e) {
     e.preventDefault();
-    // Storage.clearStorage();
     const projectName = projectForm.querySelector('input[name="project-name"]').value;
     const projectDesc = projectForm.querySelector('input[name="project-desc"]').value;
-    //Create Project Object
     let projectNew = new project(projectName, projectDesc);
     Storage.addProject(projectNew);
     const len = Storage.getProjects().length
     const indices = len === 0 ? len : len - 1;
-    // myProjects.push(projectNew);
     createProject(projectNew.name, projectNew.description, indices)
 });
 
-function createTask(tsName, tsDate, tsPriority, parentElement) {
+function createTask(tsName, tsDate, tsPriority, parentElement, tsIndex) {
     const addTask = document.querySelector(`div[data-index="${parentElement}"]`);
-    // console.log(parentElement, ' -- ', addTask)
     const newTask = document.createElement('div');
     newTask.className += 'task-list'
+    newTask.setAttribute('data-task', `${tsIndex}`)
     const span = document.createElement('span');
     span.className += 'task-text';
     const p1 = document.createElement('p');
@@ -208,7 +205,6 @@ function createTask(tsName, tsDate, tsPriority, parentElement) {
 }
 
 const taskForm = document.querySelector('.projects')
-// console.log(taskForm)
 taskForm.addEventListener('submit', function (e) {
         e.preventDefault();
         const form = e.target;
@@ -217,30 +213,35 @@ taskForm.addEventListener('submit', function (e) {
         const taskPriority = form.querySelector('select[name="priority"]').value
         const cTask = new taskDetails(task, taskDate, taskPriority);
         const parent = form.parentElement;
-        const indices = Storage.getProjects().length
-        console.log(parent, indices)
         const parIndex = parent.getAttribute('data-index');
-        // console.log(parIndex)
-        // console.log(parIndex, e.target)
         Storage.addTask(cTask, parIndex);
-        createTask(cTask.taskName, cTask.dueDate, cTask.priority, parIndex);
+        const allProjects = Storage.getProjects();
+        const taskParent = allProjects[parIndex];
+        const taskArr = taskParent.tasks.length - 1;
+        console.log(taskArr, parIndex);
+        createTask(cTask.taskName, cTask.dueDate, cTask.priority, parIndex, taskArr);
     });
 
-// const taskForm = document.querySelectorAll('.new-task')
-// // console.log(taskForm)
-// taskForm.forEach(function(form){
-//     form.addEventListener('submit', function (e) {
-//         e.preventDefault();
-//         const task = form.querySelector('input[name="task-name"]').value
-//         const taskDate = form.querySelector('input[name="task-date"]').value
-//         const taskPriority = form.querySelector('select[name="priority"]').value
-//         const cTask = new taskDetails(task, taskDate, taskPriority);
-//         const parent = form.parentElement;
-//         const parIndex = parent.getAttribute('data-index');
-//         // console.log(parIndex)
-//         // console.log(parIndex, e.target)
-//         Storage.addTask(cTask, parIndex);
-//         createTask(cTask.taskName, cTask.dueDate, cTask.priority, parIndex);
-//     })
-// })
-
+taskForm.addEventListener('click', function(e){
+    if (e.target.className === 'delete-task' ) {
+        const parTask = e.target.parentElement;
+        const grandParTask = e.target.parentElement.parentElement;
+        const grandParIndex = grandParTask.getAttribute('data-index') ;
+        const allProjects = Storage.getProjects();
+        const taskParent = allProjects[grandParIndex];
+        const taskArr = taskParent.tasks.length - 1;
+        console.log(grandParIndex);
+        Storage.deleteTask(taskArr, grandParIndex);
+        grandParTask.removeChild(parTask);
+    } else if (e.target.className === 'fas fa-trash-alt' ){
+            const parTask = e.target.parentElement.parentElement;
+            const grandParTask = e.target.parentElement.parentElement.parentElement;
+            const grandParIndex = grandParTask.getAttribute('data-index') ;
+            const allProjects = Storage.getProjects();
+            const taskParent = allProjects[grandParIndex];
+            const taskArr = taskParent.tasks.length - 1;
+            console.log(grandParIndex);
+            Storage.deleteTask(taskArr, grandParIndex);
+            grandParTask.removeChild(parTask);
+    }
+})
