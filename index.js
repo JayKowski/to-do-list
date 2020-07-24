@@ -124,12 +124,21 @@ function createProject(name, description, prIndex){
     newProject.appendChild(deleteProject);
 }
 
+// function renderTasks(projTask) {
+//     projTask.forEach(function (task) {
+//         createTask(task.taskName, task.dueDate, task.priority, index);
+//     })
+// }
+
 // add all local storage projects to the DOM
 let allProjects = Storage.getProjects();
 allProjects.forEach(function (project, index) {
     createProject(project.name, project.description, index);
-    createTask(project.tasks.taskName, project.tasks.dueDate, project.tasks.priority, index)
+    project.tasks.forEach(function(task){
+        createTask(task.taskName, task.dueDate, task.priority, index);
+    })
 })
+
 
 const projectForm = document.querySelector('.add-project')
     projectForm.addEventListener('submit', function (e) {
@@ -148,7 +157,7 @@ const projectForm = document.querySelector('.add-project')
 
 function createTask(tsName, tsDate, tsPriority, parentElement) {
     const addTask = document.querySelector(`div[data-index="${parentElement}"]`);
-    console.log(parentElement, ' -- ', addTask)
+    // console.log(parentElement, ' -- ', addTask)
     const newTask = document.createElement('div');
     newTask.className += 'task-list'
     const span = document.createElement('span');
@@ -210,7 +219,7 @@ taskForm.forEach(function(form){
         const parIndex = parent.getAttribute('data-index');
         // console.log(parIndex)
         // console.log(parIndex, e.target)
-        Storage.addTask(cTask, parent);
+        Storage.addTask(cTask, parIndex);
         let allProjects = Storage.getProjects();
         createTask(cTask.taskName, cTask.dueDate, cTask.Priority, parIndex);
     })

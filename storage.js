@@ -30,12 +30,12 @@ export function updateProject(){
 
 export function addTask(task, project){
     let projects = JSON.parse(localStorage.getItem('myProjects'));
-    let index = parseInt(project.getAttribute('data-index'));
-    // console.log(index)
+    let index = parseInt(project);
+    console.log(index)
     projects[index].tasks.push(task);
-    // console.log(projects[index]);
+    console.log(projects[index]);
     localStorage.setItem('myProjects', JSON.stringify(projects))
-    // console.log('task added successfully', task);
+    console.log('task added successfully', task);
 }
 
 export function deleteProject(key){
