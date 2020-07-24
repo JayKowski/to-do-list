@@ -1,25 +1,31 @@
+let projects;
+
+export function createArray(){
+    projects = [];
+}
+
 export function addProject(project) {
-    let myProjects;
     if(localStorage.getItem('myProjects') === null){
-        myProjects = [];
+        createArray();
     } else {
-        myProjects = JSON.parse(localStorage.getItem('myProjects'));
+        projects = JSON.parse(localStorage.getItem('myProjects'));
     }
-    myProjects.push(project);
-    localStorage.setItem('myProjects', JSON.stringify(myProjects));
+    console.log(projects);
+    projects.push(project);
+    localStorage.setItem('myProjects', JSON.stringify(projects));
     console.log('Project added Successfully', project)
 }
 
 
 export function getProjects(){
-    let myProjects;
-    if(JSON.parse(localStorage.getItem('myProjects')) == null){
+    if(JSON.parse(localStorage.getItem('myProjects')) === null){
+        createArray();
         console.log("Local storage empty");
-        return false
+        return projects;
     } else {
-        myProjects = JSON.parse(localStorage.getItem('myProjects'))
+        projects = JSON.parse(localStorage.getItem('myProjects'));
     }
-    return myProjects;
+    return projects;
 }
 
 export function updateProject(){
@@ -29,11 +35,11 @@ export function updateProject(){
 }
 
 export function addTask(task, project){
-    let projects = JSON.parse(localStorage.getItem('myProjects'));
+    projects = JSON.parse(localStorage.getItem('myProjects'));
     let index = parseInt(project);
-    console.log(index)
+    // console.log(index)
     projects[index].tasks.push(task);
-    console.log(projects[index]);
+    // console.log(projects[index]);
     localStorage.setItem('myProjects', JSON.stringify(projects))
     console.log('task added successfully', task);
 }

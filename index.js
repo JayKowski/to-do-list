@@ -32,7 +32,7 @@ function project(name, description) {
 const task1 = new taskDetails('add task', '12/13/14', 'HIGH')
 
 // console.log(task1.taskName)
-
+// Storage.clearStorage();
 function createNewProjectForm(attatchTo) {
     const createForm = document.createElement('form')
     createForm.className += 'new-task';
@@ -48,6 +48,7 @@ function createNewProjectForm(attatchTo) {
     taskInput.className += 'task-input';
     taskInput.setAttribute('type', 'text');
     taskInput.setAttribute('name', 'task-name');
+    taskInput.setAttribute('required', '');
 
     // label plus input field for DUE-DATE:
     const dateInputLabel = document.createElement('label');
@@ -58,6 +59,7 @@ function createNewProjectForm(attatchTo) {
     dateInput.className += 'task-input';
     dateInput.setAttribute('type', 'date');
     dateInput.setAttribute('name', 'task-date');
+    dateInput.setAttribute('required', '');
 
     //create the SELECT menu
     const selectLabel = document.createElement('label');
@@ -124,20 +126,21 @@ function createProject(name, description, prIndex){
     newProject.appendChild(deleteProject);
 }
 
-// function renderTasks(projTask) {
-//     projTask.forEach(function (task) {
-//         createTask(task.taskName, task.dueDate, task.priority, index);
-//     })
-// }
-
 // add all local storage projects to the DOM
 let allProjects = Storage.getProjects();
-allProjects.forEach(function (project, index) {
-    createProject(project.name, project.description, index);
-    project.tasks.forEach(function(task){
-        createTask(task.taskName, task.dueDate, task.priority, index);
+if(allProjects === undefined){
+    Storage.createArray()
+} else {
+    allProjects.forEach(function (project, index) {
+        createProject(project.name, project.description, index);
+        project.tasks.forEach(function (task) {
+            createTask(task.taskName, task.dueDate, task.priority, index);
+        })
     })
-})
+}
+    
+
+
 
 
 const projectForm = document.querySelector('.add-project')
@@ -148,11 +151,11 @@ const projectForm = document.querySelector('.add-project')
     const projectDesc = projectForm.querySelector('input[name="project-desc"]').value;
     //Create Project Object
     let projectNew = new project(projectName, projectDesc);
-
     Storage.addProject(projectNew);
-
+    const len = Storage.getProjects().length
+    const indices = len === 0 ? len : len - 1;
     // myProjects.push(projectNew);
-    createProject(projectNew.name, projectNew.description)
+    createProject(projectNew.name, projectNew.description, indices)
 });
 
 function createTask(tsName, tsDate, tsPriority, parentElement) {
@@ -189,8 +192,6 @@ function createTask(tsName, tsDate, tsPriority, parentElement) {
     const trashBin = document.createElement('i');
     trashBin.className += 'fas fa-trash-alt';
 
-    // addTask.appendChild(returnForm());
-    // returnForm().appendChild(span);
     addTask.appendChild(newTask);
     newTask.appendChild(span);
     span.appendChild(p1);
@@ -206,22 +207,40 @@ function createTask(tsName, tsDate, tsPriority, parentElement) {
     deleteButton.appendChild(trashBin);
 }
 
-const taskForm = document.querySelectorAll('.new-task')
+const taskForm = document.querySelector('.projects')
 // console.log(taskForm)
-taskForm.forEach(function(form){
-    form.addEventListener('submit', function (e) {
+taskForm.addEventListener('submit', function (e) {
         e.preventDefault();
+        const form = e.target;
         const task = form.querySelector('input[name="task-name"]').value
         const taskDate = form.querySelector('input[name="task-date"]').value
         const taskPriority = form.querySelector('select[name="priority"]').value
         const cTask = new taskDetails(task, taskDate, taskPriority);
         const parent = form.parentElement;
+        const indices = Storage.getProjects().length
+        console.log(parent, indices)
         const parIndex = parent.getAttribute('data-index');
         // console.log(parIndex)
         // console.log(parIndex, e.target)
         Storage.addTask(cTask, parIndex);
-        let allProjects = Storage.getProjects();
-        createTask(cTask.taskName, cTask.dueDate, cTask.Priority, parIndex);
-    })
-})
+        createTask(cTask.taskName, cTask.dueDate, cTask.priority, parIndex);
+    });
+
+// const taskForm = document.querySelectorAll('.new-task')
+// // console.log(taskForm)
+// taskForm.forEach(function(form){
+//     form.addEventListener('submit', function (e) {
+//         e.preventDefault();
+//         const task = form.querySelector('input[name="task-name"]').value
+//         const taskDate = form.querySelector('input[name="task-date"]').value
+//         const taskPriority = form.querySelector('select[name="priority"]').value
+//         const cTask = new taskDetails(task, taskDate, taskPriority);
+//         const parent = form.parentElement;
+//         const parIndex = parent.getAttribute('data-index');
+//         // console.log(parIndex)
+//         // console.log(parIndex, e.target)
+//         Storage.addTask(cTask, parIndex);
+//         createTask(cTask.taskName, cTask.dueDate, cTask.priority, parIndex);
+//     })
+// })
 
