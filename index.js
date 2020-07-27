@@ -154,6 +154,7 @@ const projectForm = document.querySelector('.add-project')
     const len = Storage.getProjects().length
     const indices = len === 0 ? len : len - 1;
     createProject(projectNew.name, projectNew.description, indices)
+    projectForm.reset();
 });
 
 function createTask(tsName, tsDate, tsPriority, parentElement, tsIndex) {
@@ -178,9 +179,20 @@ function createTask(tsName, tsDate, tsPriority, parentElement, tsIndex) {
     const checkbox1 = document.createElement('input');
     checkbox1.className += 'done-task'
     checkbox1.setAttribute('type', 'checkbox');
-    checkbox1.setAttribute('value', 'true');
+    // checkbox1.setAttribute('value', 'true');
+    //small if statement
+
     const divTask2 = document.createElement('div');
     divTask2.className += 'task-footer-right';
+    //small if block
+    if(tsPriority === 'high'){
+        divTask2.style.backgroundColor = '#E74B58'
+    } else if (tsPriority === 'medium'){
+        divTask2.style.backgroundColor = '#F09D51'
+    } else if (tsPriority === 'low'){
+        divTask2.style.backgroundColor = '#D0B8B3'
+    }
+    console.log(tsPriority)
     const check2 = document.createElement('i');
     check2.className += 'far fa-flag';
     const spanFooter = document.createElement('span');
@@ -222,30 +234,34 @@ taskForm.addEventListener('submit', function (e) {
         const taskArr = taskParent.tasks.length - 1;
         console.log(taskArr, parIndex);
         createTask(cTask.taskName, cTask.dueDate, cTask.priority, parIndex, taskArr);
+        e.target.reset();
     });
 
 taskForm.addEventListener('click', function(e){
     if (e.target.className === 'delete-task' ) {
         const parTask = e.target.parentElement;
         const grandParTask = e.target.parentElement.parentElement;
-        const grandParIndex = grandParTask.getAttribute('data-index') ;
         const allProjects = Storage.getProjects();
+        const grandParIndex = grandParTask.getAttribute('data-index') ;
+        const taskParent = allProjects[grandParIndex];
+        const taskArr = taskParent.tasks.length -  1;
+        console.log(taskArr);
+        grandParTask.removeChild(parTask);
+        Storage.deleteTask(taskArr, grandParIndex);
+        console.log(taskParent.tasks.length, taskArr);
+    } else if (e.target.className === 'fas fa-trash-alt' ){
+        const parTask = e.target.parentElement.parentElement;
+        const grandParTask = e.target.parentElement.parentElement.parentElement;
+        const allProjects = Storage.getProjects();
+        const grandParIndex = grandParTask.getAttribute('data-index');
         const taskParent = allProjects[grandParIndex];
         const taskArr = taskParent.tasks.length - 1;
-        console.log(grandParIndex);
-        Storage.deleteTask(taskArr, grandParIndex);
+        console.log(taskParent.tasks.length, taskArr );
+        console.log(taskParent.tasks)
         grandParTask.removeChild(parTask);
-    } else if (e.target.className === 'fas fa-trash-alt' ){
-            const parTask = e.target.parentElement.parentElement;
-            const grandParTask = e.target.parentElement.parentElement.parentElement;
-            const grandParIndex = grandParTask.getAttribute('data-index');
-            const allProjects = Storage.getProjects();
-            const taskParent = allProjects[grandParIndex];
-            const taskArr = taskParent.tasks.length - 1;
-            console.log(grandParIndex);
-            Storage.deleteTask(taskArr, grandParIndex);
-            grandParTask.removeChild(parTask);
-    }
+        Storage.deleteTask(taskArr, grandParIndex);
+        console.log(taskParent.tasks.length, taskArr);
+        }
 });
 
 taskForm.addEventListener('click', function(e){
@@ -276,30 +292,36 @@ taskForm.addEventListener('change', function(e){
 
 taskForm.addEventListener('click', function(e){
     if (e.target.className === 'task-footer-right'){
-        const priorityRoot = e.target.parentElement.parentElement.parentElement;
-        const priorityProj = priorityRoot.parentElement;
-        const priorityRootIndex = priorityRoot.getAttribute('data-task');
-        const priorityProjIndex = priorityProj.getAttribute('data-index');
-        updatePriority (priorityRootIndex, priorityProjIndex);
+        const priorityRootElement = e.target.parentElement.parentElement.parentElement;
+        const priorityElem = e.target;
+        updatePriority(priorityRootElement, priorityElem);
     } else if (e.target.className === 'far fa-flag' ||
             e.target.className === 'task-priority'){
-            const priorityRoot = e.target.parentElement.parentElement.parentElement.parentElement;
-            const priorityProj = priorityRoot.parentElement;
-            const priorityRootIndex = priorityRoot.getAttribute('data-task');
-            const priorityProjIndex = priorityProj.getAttribute('data-index');
-            updatePriority (priorityRootIndex, priorityProjIndex);
+            const priorityRootElement = e.target.parentElement.parentElement.parentElement.parentElement;
+            const priorityElem = e.target.parentElement;
+            updatePriority(priorityRootElement, priorityElem);
     }
 });
 
-function updatePriority (taskIndex, projectIndex, element) {
-    const priorityBox = element
-    const priorityText = priorityBox.innerHTML;
-    if (priorityText === 'high') {
-        priorityText = 'low'
-    } else if(priorityText === 'low') {
-        priorityText = 'medium'
-    } else if (priorityText === 'medium') {
-        priorityText = 'high'
+function updatePriority (pRoot, element) {
+    const priorityRoot = pRoot;
+    const priorityProj = priorityRoot.parentElement;
+    const priorityRootIndex = priorityRoot.getAttribute('data-task');
+    const priorityProjIndex = priorityProj.getAttribute('data-index');
+    const allProjects = Storage.getProjects();
+    let thePriority = allProjects[priorityProjIndex].tasks[priorityRootIndex].priority;
+    if (thePriority === 'high') {
+        thePriority = 'low'
+        element.children[1].innerHTML = 'low'
+        element.style.backgroundColor = '#D0B8B3'
+    } else if(thePriority === 'low') {
+        thePriority = 'medium'
+        element.children[1].innerHTML = 'medium'
+        element.style.backgroundColor = '#F09D51'
+    } else if (thePriority === 'medium') {
+        thePriority = 'high'
+        element.children[1].innerHTML = 'high'
+        element.style.backgroundColor = '#E74B58'
     }
-Storage.updateTsPriority(taskIndex, projectIndex, priorityText);
+    Storage.updateTsPriority(priorityRootIndex, priorityProjIndex, thePriority);
 }
