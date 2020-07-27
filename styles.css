@@ -121,7 +121,14 @@ body{
     margin: 0;
 }
 
-.task-list .check-form .task-footer {
+.task-list .check-form .task-footer-left {
+    border: 1px solid #eee;
+    display: inline-block;
+    padding: 3px;
+    border-radius: 5px;
+}
+
+.task-list .check-form .task-footer-right {
     border: 1px solid #eee;
     display: inline-block;
     padding: 3px;

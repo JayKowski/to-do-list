@@ -28,10 +28,11 @@ export function getProjects(){
     return projects;
 }
 
-export function updateProject(){
-    if (localStorage.getItem('myProjects')){
-
-    }
+export function deleteProject(project){
+    projects = JSON.parse(localStorage.getItem('myProjects'));
+    projects.splice(project, 1);
+    console.log('Your project has been deleted');
+    localStorage.setItem('myProjects', JSON.stringify(projects));
 }
 
 export function addTask(task, project){
@@ -51,8 +52,13 @@ export function deleteTask(task, project){
     localStorage.setItem('myProjects', JSON.stringify(projects));
 }
 
-export function deleteProject(key){
-    return localStorage.removeItem(`${key}`)
+export function updateTask(task, aProject, status, tsPriority){
+    projects = JSON.parse(localStorage.getItem('myProjects'));
+    let tsProject = projects[parseInt(aProject)];
+    let tsTask = tsProject.tasks[task];
+    tsTask.completed = status;
+    tsTask.priority = tsPriority;
+    localStorage.setItem('myProjects', JSON.stringify(projects));
 }
 
 export function clearStorage(){

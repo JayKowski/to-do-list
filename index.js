@@ -20,7 +20,8 @@ import * as Storage from './storage.js';
 function taskDetails(name, date, priority) {
     this.taskName = name,
     this.dueDate = date,
-    this.priority = priority
+    this.priority = priority,
+    this.completed = false
 }
 
 function project(name, description) {
@@ -29,7 +30,7 @@ function project(name, description) {
     this.tasks = []
 }
 
-const task1 = new taskDetails('add task', '12/13/14', 'HIGH')
+// const task1 = new taskDetails('add task', '12/13/14', 'HIGH')
 
 // console.log(task1.taskName)
 // Storage.clearStorage();
@@ -133,8 +134,8 @@ if(allProjects === undefined){
 } else {
     allProjects.forEach(function (project, index) {
         createProject(project.name, project.description, index);
-        project.tasks.forEach(function (task) {
-            createTask(task.taskName, task.dueDate, task.priority, index);
+        project.tasks.forEach(function (task, chIndex) {
+            createTask(task.taskName, task.dueDate, task.priority, index, chIndex);
         })
     })
 }
@@ -171,14 +172,15 @@ function createTask(tsName, tsDate, tsPriority, parentElement, tsIndex) {
     const div1 = document.createElement('div');
     div1.className += 'check-form';
     const divTask1 = document.createElement('div');
-    divTask1.className += 'task-footer';
+    divTask1.className += 'task-footer-left';
     const check1 = document.createElement('i');
     check1.className += 'far fa-check-circle';
     const checkbox1 = document.createElement('input');
     checkbox1.className += 'done-task'
     checkbox1.setAttribute('type', 'checkbox');
+    checkbox1.setAttribute('value', 'true');
     const divTask2 = document.createElement('div');
-    divTask2.className += 'task-footer';
+    divTask2.className += 'task-footer-right';
     const check2 = document.createElement('i');
     check2.className += 'far fa-flag';
     const spanFooter = document.createElement('span');
@@ -236,12 +238,46 @@ taskForm.addEventListener('click', function(e){
     } else if (e.target.className === 'fas fa-trash-alt' ){
             const parTask = e.target.parentElement.parentElement;
             const grandParTask = e.target.parentElement.parentElement.parentElement;
-            const grandParIndex = grandParTask.getAttribute('data-index') ;
+            const grandParIndex = grandParTask.getAttribute('data-index');
             const allProjects = Storage.getProjects();
             const taskParent = allProjects[grandParIndex];
             const taskArr = taskParent.tasks.length - 1;
             console.log(grandParIndex);
             Storage.deleteTask(taskArr, grandParIndex);
             grandParTask.removeChild(parTask);
+    }
+});
+
+taskForm.addEventListener('click', function(e){
+    if (e.target.className === 'dlt-prjct' ) {
+        const parProject = e.target.parentElement;
+        const parProjectIndex = parProject.getAttribute('data-index'); 
+        Storage.deleteProject(parProjectIndex);
+        taskForm.removeChild(parProject);
+    }
+});
+
+taskForm.addEventListener('change', function(e){
+    const checkRoot = e.target.parentElement.parentElement.parentElement.parentElement;
+    const checkProject = checkRoot.parentElement;
+    const checkRootIndex = checkRoot.getAttribute('data-task');
+    const checkProjectIndex = checkProject.getAttribute('data-index');
+    let value = e.target.checked;
+    if (e.target.className ===  'done-task') {
+        if (value === true) {
+           Storage.updateTask(checkRootIndex, checkProjectIndex, value)
+           checkRoot.style.backgroundColor = '#819FD9'
+        } else if(value === false) {
+            Storage.updateTask(checkRootIndex, checkProjectIndex, value)
+            checkRoot.style.backgroundColor = '#D0B8B3'
+        }
+    }
+});
+
+taskForm.addEventListener('click', function(e){
+    if (e.target.className === 'task-footer-right' ||
+        e.target.className === 'far fa-flag' ||
+        e.target.className === 'task-priority'){
+            console.log(e.target)
     }
 })
