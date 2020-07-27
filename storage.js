@@ -52,13 +52,21 @@ export function deleteTask(task, project){
     localStorage.setItem('myProjects', JSON.stringify(projects));
 }
 
-export function updateTask(task, aProject, status, tsPriority){
+export function updateTask(task, aProject, status){
     projects = JSON.parse(localStorage.getItem('myProjects'));
     let tsProject = projects[parseInt(aProject)];
     let tsTask = tsProject.tasks[task];
     tsTask.completed = status;
+    localStorage.setItem('myProjects', JSON.stringify(projects));
+}
+
+export function updateTsPriority(task, aProject, tsPriority){
+    projects = JSON.parse(localStorage.getItem('myProjects'));
+    let tsProject = projects[parseInt(aProject)];
+    let tsTask = tsProject.tasks[task];
     tsTask.priority = tsPriority;
     localStorage.setItem('myProjects', JSON.stringify(projects));
+    console.log(tsTask)
 }
 
 export function clearStorage(){

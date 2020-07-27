@@ -275,9 +275,31 @@ taskForm.addEventListener('change', function(e){
 });
 
 taskForm.addEventListener('click', function(e){
-    if (e.target.className === 'task-footer-right' ||
-        e.target.className === 'far fa-flag' ||
-        e.target.className === 'task-priority'){
-            console.log(e.target)
+    if (e.target.className === 'task-footer-right'){
+        const priorityRoot = e.target.parentElement.parentElement.parentElement;
+        const priorityProj = priorityRoot.parentElement;
+        const priorityRootIndex = priorityRoot.getAttribute('data-task');
+        const priorityProjIndex = priorityProj.getAttribute('data-index');
+        updatePriority (priorityRootIndex, priorityProjIndex);
+    } else if (e.target.className === 'far fa-flag' ||
+            e.target.className === 'task-priority'){
+            const priorityRoot = e.target.parentElement.parentElement.parentElement.parentElement;
+            const priorityProj = priorityRoot.parentElement;
+            const priorityRootIndex = priorityRoot.getAttribute('data-task');
+            const priorityProjIndex = priorityProj.getAttribute('data-index');
+            updatePriority (priorityRootIndex, priorityProjIndex);
     }
-})
+});
+
+function updatePriority (taskIndex, projectIndex, element) {
+    const priorityBox = element
+    const priorityText = priorityBox.innerHTML;
+    if (priorityText === 'high') {
+        priorityText = 'low'
+    } else if(priorityText === 'low') {
+        priorityText = 'medium'
+    } else if (priorityText === 'medium') {
+        priorityText = 'high'
+    }
+Storage.updateTsPriority(taskIndex, projectIndex, priorityText);
+}
