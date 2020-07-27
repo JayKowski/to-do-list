@@ -240,27 +240,18 @@ taskForm.addEventListener('submit', function (e) {
 taskForm.addEventListener('click', function(e){
     if (e.target.className === 'delete-task' ) {
         const parTask = e.target.parentElement;
+        const parTaskIndex = parTask.getAttribute('data-task');
         const grandParTask = e.target.parentElement.parentElement;
-        const allProjects = Storage.getProjects();
         const grandParIndex = grandParTask.getAttribute('data-index') ;
-        const taskParent = allProjects[grandParIndex];
-        const taskArr = taskParent.tasks.length -  1;
-        console.log(taskArr);
         grandParTask.removeChild(parTask);
-        Storage.deleteTask(taskArr, grandParIndex);
-        console.log(taskParent.tasks.length, taskArr);
+        Storage.deleteTask(parTaskIndex, grandParIndex);
     } else if (e.target.className === 'fas fa-trash-alt' ){
         const parTask = e.target.parentElement.parentElement;
+        const parTaskIndex = parTask.getAttribute('data-task');
         const grandParTask = e.target.parentElement.parentElement.parentElement;
-        const allProjects = Storage.getProjects();
         const grandParIndex = grandParTask.getAttribute('data-index');
-        const taskParent = allProjects[grandParIndex];
-        const taskArr = taskParent.tasks.length - 1;
-        console.log(taskParent.tasks.length, taskArr );
-        console.log(taskParent.tasks)
         grandParTask.removeChild(parTask);
-        Storage.deleteTask(taskArr, grandParIndex);
-        console.log(taskParent.tasks.length, taskArr);
+        Storage.deleteTask(parTaskIndex, grandParIndex);
         }
 });
 
