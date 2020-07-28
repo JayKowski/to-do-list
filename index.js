@@ -17,11 +17,11 @@ import * as Storage from './storage.js';
 ///////////// const myProjects = []; /////////////////
 
 //Should be in it's own module file
-function taskDetails(name, date, priority) {
+function taskDetails(name, date, priority, completed) {
     this.taskName = name,
     this.dueDate = date,
     this.priority = priority,
-    this.completed = false
+    this.completed = completed
 }
 
 function project(name, description) {
@@ -117,12 +117,20 @@ function createProject(name, description, prIndex){
     p.className += 'to-do-description';
     h2.innerHTML = `${name}`;
     p.innerHTML = `${description}`;
+    ////
+
+    const newTask = document.createElement('button');
+    newTask.className += 'add-tsk';
+    newTask.innerHTML = '+ New Task';
+
+    ///
     const deleteProject = document.createElement('button');
     deleteProject.className += 'dlt-prjct';
     deleteProject.innerHTML = 'Delete Project';
     addProject.appendChild(newProject);
     newProject.appendChild(h2);
     newProject.appendChild(p);
+    newProject.appendChild(newTask);
     createNewProjectForm(newProject);
     newProject.appendChild(deleteProject);
 }
@@ -135,14 +143,12 @@ if(allProjects === undefined){
     allProjects.forEach(function (project, index) {
         createProject(project.name, project.description, index);
         project.tasks.forEach(function (task, chIndex) {
-            createTask(task.taskName, task.dueDate, task.priority, index, chIndex);
+            createTask(task.taskName, task.dueDate, task.priority, index, chIndex, task.completed);
+            console.log(task.completed)
         })
     })
 }
     
-
-
-
 
 const projectForm = document.querySelector('.add-project')
     projectForm.addEventListener('submit', function (e) {
@@ -155,9 +161,14 @@ const projectForm = document.querySelector('.add-project')
     const indices = len === 0 ? len : len - 1;
     createProject(projectNew.name, projectNew.description, indices)
     projectForm.reset();
+    if (projectForm.style.display === 'block') {
+        projectForm.style.display = 'none'
+    } else {
+        projectForm.style.display = 'block'
+    }
 });
 
-function createTask(tsName, tsDate, tsPriority, parentElement, tsIndex) {
+function createTask(tsName, tsDate, tsPriority, parentElement, tsIndex, tsStatus) {
     const addTask = document.querySelector(`div[data-index="${parentElement}"]`);
     const newTask = document.createElement('div');
     newTask.className += 'task-list'
@@ -179,9 +190,15 @@ function createTask(tsName, tsDate, tsPriority, parentElement, tsIndex) {
     const checkbox1 = document.createElement('input');
     checkbox1.className += 'done-task'
     checkbox1.setAttribute('type', 'checkbox');
-    // checkbox1.setAttribute('value', 'true');
-    //small if statement
-
+    // if statement
+    if (tsStatus === true){
+        checkbox1.checked = true
+        newTask.style.backgroundColor = '#819FD9'
+    }else if (tsStatus === false){
+        checkbox1.checked = false
+        newTask.style.backgroundColor = '#D0B8B3'
+    }
+    
     const divTask2 = document.createElement('div');
     divTask2.className += 'task-footer-right';
     //small if block
@@ -225,7 +242,7 @@ taskForm.addEventListener('submit', function (e) {
         const task = form.querySelector('input[name="task-name"]').value
         const taskDate = form.querySelector('input[name="task-date"]').value
         const taskPriority = form.querySelector('select[name="priority"]').value
-        const cTask = new taskDetails(task, taskDate, taskPriority);
+        const cTask = new taskDetails(task, taskDate, taskPriority, false);
         const parent = form.parentElement;
         const parIndex = parent.getAttribute('data-index');
         Storage.addTask(cTask, parIndex);
@@ -233,8 +250,13 @@ taskForm.addEventListener('submit', function (e) {
         const taskParent = allProjects[parIndex];
         const taskArr = taskParent.tasks.length - 1;
         console.log(taskArr, parIndex);
-        createTask(cTask.taskName, cTask.dueDate, cTask.priority, parIndex, taskArr);
+        createTask(cTask.taskName, cTask.dueDate, cTask.priority, parIndex, taskArr, cTask.completed);
         e.target.reset();
+        if (form.style.display === 'block') {
+            form.style.display = 'none'
+        } else {
+            form.style.display = 'block'
+        }
     });
 
 taskForm.addEventListener('click', function(e){
@@ -269,13 +291,11 @@ taskForm.addEventListener('change', function(e){
     const checkProject = checkRoot.parentElement;
     const checkRootIndex = checkRoot.getAttribute('data-task');
     const checkProjectIndex = checkProject.getAttribute('data-index');
-    let value = e.target.checked;
     if (e.target.className ===  'done-task') {
-        if (value === true) {
-           Storage.updateTask(checkRootIndex, checkProjectIndex, value)
-           checkRoot.style.backgroundColor = '#819FD9'
-        } else if(value === false) {
-            Storage.updateTask(checkRootIndex, checkProjectIndex, value)
+        Storage.updateTask(checkRootIndex, checkProjectIndex, e.target.checked)
+        if (e.target.checked === true){
+            checkRoot.style.backgroundColor = '#819FD9'
+        }else if (e.target.checked === false){
             checkRoot.style.backgroundColor = '#D0B8B3'
         }
     }
@@ -316,3 +336,26 @@ function updatePriority (pRoot, element) {
     }
     Storage.updateTsPriority(priorityRootIndex, priorityProjIndex, thePriority);
 }
+
+const addProject = document.querySelector('.add-item')
+addProject.addEventListener('click', function(e){
+    const form = document.querySelector('.add-project')
+    console.log(e)
+    if ( getComputedStyle(form, null).display === 'none') {
+        form.style.display = 'block'
+    } else {
+        form.style.display = 'none'
+    }
+})
+
+taskForm.addEventListener('click', function(e){
+    if(e.target.className === 'add-tsk') {
+        console.log(e)
+        if (getComputedStyle(e.target.parentElement.children[3], null).display === 'none') {
+            e.target.parentElement.children[3].style.display = 'block'
+    } else {
+        e.target.parentElement.children[3].style.display = 'none'
+    }
+    }
+})
+
