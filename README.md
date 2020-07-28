@@ -7,7 +7,8 @@
 
 ## About the project
 
-This project implements a to-do list. It's built entirely on JavaScript, HTML and CSS.
+This project is designed to be used as a mobile app.
+It implements a to-do list. It's built entirely on JavaScript, HTML and CSS.
 
 ## Features
 
