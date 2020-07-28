@@ -1,4 +1,4 @@
-# JavaScript Library
+# JavaScript To-do List
 
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
