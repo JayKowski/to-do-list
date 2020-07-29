@@ -5,6 +5,7 @@ export default function createTask(
   parentElement,
   tsIndex,
   tsStatus,
+  tsDiff,
 ) {
   const addTask = document.querySelector(`div[data-index="${parentElement}"]`);
   const newTask = document.createElement('div');
@@ -18,6 +19,9 @@ export default function createTask(
   const p2 = document.createElement('p');
   p2.className += 'due-date';
   p2.innerHTML = `${tsDate}`;
+  const p3 = document.createElement('p');
+  p3.className += 'due-date';
+  p3.innerHTML = `Days left: ${tsDiff}`;
   const div1 = document.createElement('div');
   div1.className += 'check-form';
   const divTask1 = document.createElement('div');
@@ -60,6 +64,7 @@ export default function createTask(
   newTask.appendChild(span);
   span.appendChild(p1);
   span.appendChild(p2);
+  span.appendChild(p3);
   span.appendChild(div1);
   div1.appendChild(divTask1);
   divTask1.appendChild(check1);

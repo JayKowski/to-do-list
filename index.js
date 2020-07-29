@@ -1,3 +1,5 @@
+import format from 'date-fns/format';
+import differrenceInCalendarDays from 'date-fns/differenceInCalendarDays';
 import * as Storage from './storage';
 import createTask from './createTask';
 import createProject from './createProject';
@@ -7,13 +9,23 @@ import updatePriority from './updatePriority';
 
 // add all local storage projects to the DOM
 const allProjects = Storage.getProjects();
+const todayDate = new Date().getDate();
+const todayYear = new Date().getFullYear();
+const todayMonth = new Date().getMonth() + 1;
+
 if (allProjects === undefined) {
   Storage.createArray();
 } else {
   allProjects.forEach((project, index) => {
     createProject(project.name, project.description, index);
     project.tasks.forEach((task, chIndex) => {
-      createTask(task.taskName, task.dueDate, task.priority, index, chIndex, task.completed);
+      createTask(task.taskName,
+        task.dueDate,
+        task.priority,
+        index,
+        chIndex,
+        task.completed,
+        task.leftDays);
     });
   });
 }
@@ -43,20 +55,43 @@ taskForm.addEventListener('submit', (e) => {
   const task = form.querySelector('input[name="task-name"]').value;
   const taskDate = form.querySelector('input[name="task-date"]').value;
   const taskPriority = form.querySelector('select[name="priority"]').value;
-  const cTask = new TaskDetails(task, taskDate, taskPriority, false);
+  const splitted = taskDate.split('-');
+  const year = splitted[0];
+  const month = splitted[1];
+  const day = splitted[2];
+  const trueDate = format(new Date(taskDate), 'MMMM dd, yyyy');
+  const diff = differrenceInCalendarDays(
+    new Date(year, month, day),
+    new Date(todayYear, todayMonth, todayDate),
+  );
+  if (diff < 0) {
+    /* eslint-disable no-alert, no-console */
+
+    alert('due date cannot be prior to today');
+    return false;
+  }
+  const cTask = new TaskDetails(task, trueDate, taskPriority, false, diff);
   const parent = form.parentElement;
   const parIndex = parent.getAttribute('data-index');
   Storage.addTask(cTask, parIndex);
   const allProjects = Storage.getProjects();
   const taskParent = allProjects[parIndex];
   const taskArr = taskParent.tasks.length - 1;
-  createTask(cTask.taskName, cTask.dueDate, cTask.priority, parIndex, taskArr, cTask.completed);
+  createTask(cTask.taskName,
+    cTask.dueDate,
+    cTask.priority,
+    parIndex,
+    taskArr,
+    cTask.completed,
+    diff);
+
   e.target.reset();
   if (form.style.display === 'block') {
     form.style.display = 'none';
   } else {
     form.style.display = 'block';
   }
+  return true;
 });
 
 taskForm.addEventListener('click', (e) => {
