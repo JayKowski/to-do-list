@@ -12,11 +12,9 @@
 </head>
 <body>
     <div class="wrapper">
-        <ul class="navigation">
-            <li class="link">Projects</li>
-            <li class="link">Due today</li>
-            <li class="link">Priority</li>
-        </ul>
+        <h1 class="navigation">
+            TO-DO LIST
+        </h1>
         <button class="add-item">+ New Project</button>
         <div class="new-project">
             <form class="add-project">
@@ -29,7 +27,7 @@
             </form>
         </div>
         <div class="projects">
-            <div class="to-do">
+            <div class="to-do" data-index="1000">
                 <h2 class="to-do-title">Homework</h2>
                 <p class="to-do-description">This is a to do list that will help me ensure that all my homework is done without any being left
                     out</p>
@@ -103,7 +101,7 @@
                 </div>
                 <button class="dlt-prjct">Delete Project</button>
             </div>
-            <div class="to-do">
+            <div class="to-do" data-index="1001">
                 <h2 class="to-do-title">Homework</h2>
                 <p class="to-do-description">This is a to do list that will help me ensure that all my homework is done without any
                     being left
@@ -177,6 +175,6 @@
             </div>
         </div>
     </div>
-    <script src="index.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
