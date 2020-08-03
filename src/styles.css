@@ -1,6 +1,26 @@
+html {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background-color: rgb(240, 240, 240);
+}
+
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: inherit;
+  -moz-box-sizing: inherit;
+  box-sizing: inherit;
+}
+
 body {
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   background-color: #f2e9e4;
+  max-width: 500px;
+  margin: auto;
+  margin-top: 20px;
+  border: 2px solid #ccc;
+  padding: 10px;
 }
 
 .wrapper {
@@ -88,12 +108,12 @@ body {
 
 .new-task .task-input {
   padding: 5px;
-  width: 95%;
+  width: 100%;
   margin-top: 5px;
 }
 
 .new-task .task-input-dd {
-  width: 99.5%;
+  width: 100%;
   padding: 5px;
   margin-top: 5px;
 }
