@@ -10,6 +10,8 @@
 This project is designed to be used as a mobile app.
 It implements a to-do list. It's built entirely on JavaScript, HTML and CSS.
 
+![gif](to-do.gif)
+
 ## Features
 
 Some of the features of this project include:
