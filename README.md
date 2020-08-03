@@ -25,7 +25,7 @@ Some of the features of this project include:
 
 To preview the project check this link:
 
-[Live Project](https://rawcdn.githack.com/JayKowski/to-do-list/f83525b1521fb173039d1163a85077025b1b42cc/index.html)
+[Live Project](https://rawcdn.githack.com/JayKowski/to-do-list/cceb62d976ece4b92205120675eee1d177c85dbd/dist/index.html)
 
 ## Technologies Used
 
