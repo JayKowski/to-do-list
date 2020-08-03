@@ -1,11 +1,12 @@
+import './styles.css';
 import format from 'date-fns/format';
 import differrenceInCalendarDays from 'date-fns/differenceInCalendarDays';
-import * as Storage from './storage';
-import createTask from './createTask';
-import createProject from './createProject';
-import Project from './project';
-import TaskDetails from './taskDetails';
-import updatePriority from './updatePriority';
+import * as Storage from './components/storage';
+import createTask from './components/createTask';
+import createProject from './components/createProject';
+import Project from './components/project';
+import TaskDetails from './components/taskDetails';
+import updatePriority from './components/updatePriority';
 
 // add all local storage projects to the DOM
 const allProjects = Storage.getProjects();
